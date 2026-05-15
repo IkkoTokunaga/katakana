@@ -11,7 +11,7 @@ services:
       - katakana_node_modules:/app/node_modules
       - katakana_next:/app/.next
     environment:
-      - NODE_ENV=development
+      # NODE_ENV は next dev / next build が個別に設定する（ここで development 固定にすると build が壊れる）
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
     command: sh -c "npm install && npm run dev"

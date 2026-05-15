@@ -2,7 +2,8 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat fontconfig font-noto-cjk \
+    && fc-cache -f
 
 COPY package.json package-lock.json* ./
 
