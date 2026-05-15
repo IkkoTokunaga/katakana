@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family:
+    "Hiragino Maru Gothic ProN",
+    "Hiragino Maru Gothic Pro",
+    "M PLUS Rounded 1c",
+    "Hiragino Sans",
+    "Yu Gothic UI",
+    "Meiryo",
+    system-ui,
+    sans-serif;
+  background:
+    radial-gradient(circle at top, #eff6ff 0%, #f0f9ff 60%, #e0f2fe 100%);
+  color: #1f2937;
+}
+
+/* Disable double-tap zoom on the canvas areas */
+canvas {
+  touch-action: none;
+}
