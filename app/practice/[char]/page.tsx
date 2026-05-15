@@ -4,7 +4,7 @@ import StrokeAnimation from "@/components/StrokeAnimation";
 import TraceCanvas from "@/components/TraceCanvas";
 import FreeCanvas from "@/components/FreeCanvas";
 import WordExamples from "@/components/WordExamples";
-import { KATAKANA_MAP } from "@/lib/katakana";
+import { KATAKANA_LIST, KATAKANA_MAP } from "@/lib/katakana";
 
 export const dynamicParams = true;
 
@@ -18,6 +18,12 @@ export default function PracticePage({
   if (!item) notFound();
 
   const hasStrokes = !!item.strokes && item.strokes.length > 0;
+
+  // 前後の文字を循環ナビゲーション (先頭で前を押すと末尾へ、末尾で次を押すと先頭へ)
+  const currentIndex = KATAKANA_LIST.findIndex((k) => k.char === item.char);
+  const total = KATAKANA_LIST.length;
+  const prevItem = KATAKANA_LIST[(currentIndex - 1 + total) % total];
+  const nextItem = KATAKANA_LIST[(currentIndex + 1) % total];
 
   return (
     <div className="space-y-8">
@@ -92,12 +98,28 @@ export default function PracticePage({
         <WordExamples char={item.char} words={item.words} />
       </section>
 
-      <div className="pt-2 text-center">
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <Link
+          href={`/practice/${encodeURIComponent(prevItem.char)}`}
+          aria-label={`まえの もじ ${prevItem.char} へ`}
+          className="inline-flex items-center gap-1 rounded-full bg-white px-4 py-2 text-base font-bold text-primary-700 shadow-md ring-2 ring-primary-200 hover:bg-primary-50 active:bg-primary-100"
+        >
+          <span aria-hidden="true">←</span>
+          <span className="text-xl">{prevItem.char}</span>
+        </Link>
         <Link
           href="/"
           className="inline-block rounded-full bg-primary-500 px-6 py-2 text-base font-bold text-white shadow-md hover:bg-primary-600 active:bg-primary-700"
         >
           ほかの もじを えらぶ
+        </Link>
+        <Link
+          href={`/practice/${encodeURIComponent(nextItem.char)}`}
+          aria-label={`つぎの もじ ${nextItem.char} へ`}
+          className="inline-flex items-center gap-1 rounded-full bg-white px-4 py-2 text-base font-bold text-primary-700 shadow-md ring-2 ring-primary-200 hover:bg-primary-50 active:bg-primary-100"
+        >
+          <span className="text-xl">{nextItem.char}</span>
+          <span aria-hidden="true">→</span>
         </Link>
       </div>
     </div>
