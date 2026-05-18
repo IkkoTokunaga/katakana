@@ -4,7 +4,12 @@ import StrokeAnimation from "@/components/StrokeAnimation";
 import TraceCanvas from "@/components/TraceCanvas";
 import FreeCanvas from "@/components/FreeCanvas";
 import WordExamples from "@/components/WordExamples";
+import ScrollSectionButtons from "@/components/ScrollSectionButtons";
 import { KATAKANA_LIST, KATAKANA_MAP } from "@/lib/katakana";
+
+const TRACE_SECTION_ID = "section-trace";
+const FREE_SECTION_ID = "section-free";
+const BOTTOM_NAV_ID = "bottom-nav";
 
 export const dynamicParams = true;
 
@@ -62,14 +67,14 @@ export default function PracticePage({
             </div>
           </section>
 
-          <section>
+          <section id={TRACE_SECTION_ID} className="scroll-mt-20">
             <h2 className="mb-3 text-lg font-bold text-primary-700">
               ② なぞって かいてみよう
             </h2>
             <TraceCanvas char={item.char} strokes={item.strokes!} />
           </section>
 
-          <section>
+          <section id={FREE_SECTION_ID} className="scroll-mt-20">
             <h2 className="mb-3 text-lg font-bold text-primary-700">
               ③ じゆうに かいてみよう
             </h2>
@@ -98,7 +103,10 @@ export default function PracticePage({
         <WordExamples char={item.char} words={item.words} />
       </section>
 
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+      <div
+        id={BOTTOM_NAV_ID}
+        className="flex flex-wrap items-center justify-center gap-3 pt-2"
+      >
         <Link
           href={`/practice/${encodeURIComponent(prevItem.char)}`}
           aria-label={`まえの もじ ${prevItem.char} へ`}
@@ -122,6 +130,14 @@ export default function PracticePage({
           <span aria-hidden="true">→</span>
         </Link>
       </div>
+
+      {hasStrokes && (
+        <ScrollSectionButtons
+          traceId={TRACE_SECTION_ID}
+          freeId={FREE_SECTION_ID}
+          hideWhenVisibleId={BOTTOM_NAV_ID}
+        />
+      )}
     </div>
   );
 }
