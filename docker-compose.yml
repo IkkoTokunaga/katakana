@@ -8,8 +8,8 @@ services:
       - "3001:3000"
     volumes:
       - .:/app
+      # next dev の .next はコンテナ専用ボリュームに置かない（古いチャンクが残り Cannot find module ./xxx.js になる）
       - katakana_node_modules:/app/node_modules
-      - katakana_next:/app/.next
     environment:
       # NODE_ENV は next dev / next build が個別に設定する（ここで development 固定にすると build が壊れる）
       - WATCHPACK_POLLING=true
@@ -20,4 +20,3 @@ services:
 
 volumes:
   katakana_node_modules:
-  katakana_next:
